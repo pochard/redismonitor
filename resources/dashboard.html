@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Vue 测试实例 - 菜鸟教程(runoob.com)</title>
+    <script src="js/vue.min.js"></script>
+    <script src="js/axios.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/general.css">
+</head>
+
+<body>
+    <div id="vue_det">
+        <table>
+            <tr>
+                <th>GroupID</th>
+                <th>ID</th>
+                <th>Memory</th>
+                <th>OPS</th>
+                <th>Role</th>
+                <th>Slots</th>
+                <th>Keys</th>
+                <th>Err</th>
+                <th>ID</th>
+                <th>Memory</th>
+                <th>OPS</th>
+                <th>Role</th>
+                <th>Slots</th>
+                <th>Keys</th>
+                <th>Err</th>
+            </tr>
+            <tr v-for="(item,index) in res.data" :class="(item.Slave.Err || item.Master.Err)? 'error':''">
+                <td>{{index}}</td>
+                <td>{{item.Master.Id}}</td>
+                <td>{{item.Master.Mem}}</td>
+                <td>{{item.Master.Ops}}</td>
+                <td>{{item.Master.Role}}</td>
+                <td>{{item.Master.Slots}}</td>
+                <td>{{item.Master.Keys}}</td>
+                <td>{{item.Master.Err}}</td>
+                <td>{{item.Slave.Id}}</td>
+                <td>{{item.Slave.Mem}}</td>
+                <td>{{item.Slave.Ops}}</td>
+                <td>{{item.Slave.Role}}</td>
+                <td>{{item.Slave.Slots}}</td>
+                <td>{{item.Slave.Keys}}</td>
+                <td>{{item.Slave.Err}}</td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: '#vue_det',
+            data() {
+                return {
+                    res: ""
+                }
+            },
+            mounted() {
+                axios.get('/api')
+                    .then(response => (this.res = response))
+                    .catch(function (error) { // 请求失败处理
+                        console.log(error);
+                    });
+            }
+        })
+    </script>
+</body>
+
+</html>
